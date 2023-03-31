@@ -43,11 +43,6 @@
             <input type="text" name="price" class="input">
           </div>
         </div>
-        <div class="titlebar">
-          <h1></h1>
-          <button>Save</button>
-        </div>
-       
       </form>
     </section>
   </main>

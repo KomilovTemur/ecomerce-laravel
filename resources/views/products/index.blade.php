@@ -19,7 +19,6 @@
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-
           Toast.fire({
             icon: 'success',
             title: '{{ $massage }}'
@@ -48,7 +47,7 @@
             </div>
             <div class="relative">
               <input class="search-input" type="text" name="search" placeholder="Search product..."
-                value="{{ request('search') }}">
+                     value="{{ request('search') }}">
             </div>
           </div>
         </form>
@@ -62,19 +61,24 @@
         @if (count($products) > 0)
           @foreach ($products as $product)
             <div class="table-product-body">
-              <img src="{{ asset('images/' . $product->image) }}" />
+              <img src="{{ asset('images/' . $product->image) }}"/>
               <p>{{ $product->name }}</p>
               <p>{{ $product->category }}</p>
               <p>{{ $product->quantity }}</p>
-              <div>
-                <a style="text-decoration: none;" href="{{ route('products.edit', $product->id) }}">
-                  <button class="btn btn-success">
+              <div class="flex-center">
+                <a class="flex-center" style="text-decoration: none; margin-right: 4px;" href="{{ route('products.edit', $product->id) }}">
+                  <button type="submit" class="btn btn-success">
                     <i class="fas fa-pencil-alt"></i>
                   </button>
                 </a>
-                <button class="btn btn-danger">
-                  <i class="far fa-trash-alt"></i>
-                </button>
+                <form class="flex-center" action="{{ route("products.destroy", $product->id) }}" method="POST">
+                  @csrf
+                  @method('delete')
+                  <input type="hidden">
+                  <button class="btn btn-danger" onclick="deleteConfirm(event)">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </form>
               </div>
             </div>
           @endforeach
@@ -89,4 +93,24 @@
       </div>
     </section>
   </main>
+  <script>
+    window.deleteConfirm = (e) => {
+      e.preventDefault()
+      console.log(e.target.form)
+      let form = e.target.form;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      })
+    }
+  </script>
 @endsection
