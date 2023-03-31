@@ -177,7 +177,6 @@ label {
 button,
 input[type="submit"],
 input[type="reset"] {
-  margin-top: 1em;
   border: 1px solid #e0e0e0;
   background-color: none;
   color: var(--text-dark);
@@ -505,6 +504,15 @@ footer {
   width: 100px;
   height: 80px;
 }
+
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 /* ==========================================================================
   Media queries
